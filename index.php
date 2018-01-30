@@ -1,19 +1,29 @@
 <!DOCTYPE>
 <html>
-
 <head>
-    <meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>	
-	<title>Web Solutions AC - Website Design & Web Systems Development</title>
-	<link href="css/style_construccion.css" rel="stylesheet" type="text/css">
-	<link rel="shortcut icon" href="images/icon.ico" type="img/x-icon">
+    <meta http-equiv="Cache-Control" content="no-cache"> 
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+    <meta http-equiv="Lang" content="en"> 
+    <title>WebsolutionsAC - Control Panel</title>
+    <link rel="shortcut icon" href="images/icon.ico" type="img/x-icon">
+    <!-- CSS & JS --> 
+    <script src="lib/bootstrap-4.0.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="lib/bootstrap-4.0.0/css/bootstrap.min.css"> 
+    <link rel="stylesheet" type="text/css" href="css/login.css">
 </head>
 <body>
-	<p style="text-align:center;margin:10% auto 120px;">
-		<img alt="" src="images/logotipo_construccion.png">
-	</p>
-	<div class="line-blue">
-		<h1>Our Website is Underconstruction</h1>
-		<h2>¡Coming back soon!</h2>
-	</div>
+    <div id="web_login">
+        <form class="container frm-container" method="post" action="">
+            <div class="logo"></div>
+            <input  class="user" name="usuario" type="text" placeholder="Usuario"/>
+            <input  class="pass" name="contrasena" type="password" placeholder="Contraseña"/>
+            <button class="btn" type="button">Login</button>
+        </form>
+        <div class="container">
+          <div class="login-menu">
+            <a href="#">¿Olvidaste tu contraseña?</a>
+          </div>
+        </div>
+    </div>
 </body>
 </html>
