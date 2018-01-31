@@ -1,0 +1,21 @@
+.info_login{
+    float: right;
+    padding: 10px;
+    max-width: 340px;
+    width: auto;
+    min-width: 320px;
+}
+.info_login .row{
+   
+   border:1px solid #f8fafb;
+   border-radius:6px;
+   -moz-border-radius:6px;
+   -webkit-border-radius:6px;
+   padding: 10px;
+}
+.info_login .row div:nth-child(1){border-right:1px solid #f8fafb;}
+.info_login span{
+    font-size: 0.9rem;
+    color:#8fb0bf;
+}
+.info_login span i{color:#adb5bd;}

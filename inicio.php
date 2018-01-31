@@ -11,7 +11,8 @@
     <!-- CSS & JS --> 
     <script src="lib/jquery-3.3.1.min.js"></script>
     <link rel="stylesheet" type="text/css" href="lib/bootstrap-4.0.0/css/bootstrap.min.css"> 
-    <script src="lib/bootstrap-4.0.0/js/bootstrap.min.js"></script> 
+    <script src="lib/bootstrap-4.0.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/fontawesome-all.min.css">   
     <link rel="stylesheet" type="text/css" href="css/styles.css"> 
   
 </head>
@@ -42,6 +43,15 @@
       </li>
     </ul>
   </div>
-</nav>  
+</nav> 
+<div id="cPanel_inicio" class="container">
+    <div class="info_login">
+        <div class="row">
+            <div class="col-sm-9"><span><i class="fas fa-user"></i> usuario@dominio.com</span>
+            </div>
+            <div class="col-sm-3"><span onclick=""><i class="fas fa-sign-out-alt"></i> Salir</span></div>
+        </div>
+    </div>
+</div> 
 </body>
 </html>
