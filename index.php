@@ -31,5 +31,23 @@
           </div>
         </div>
     </div>
+    <!-- MODAL -->
+    <div class="bootstrap-iso">
+    <div id="mensaje" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title">Mensaje del sistema</h5>
+          </div>
+          <div class="modal-body">
+                <p></p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-text" data-dismiss="modal">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div> 
 </body>
 </html>

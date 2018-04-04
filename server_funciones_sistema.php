@@ -51,81 +51,47 @@
     function valid_user(){
     
         require_once("cn_master.php"); // Conexion a la BDD Master  
-        $Usuario = $_POST['login'];
-        $Contra  = $_POST['contra']; 
-
-
-       //entra cuando se completan los datos
-        if($_SERVER["HTTP_HOST"]=="dev1.globalpc.net" OR $_SERVER["HTTP_HOST"]=="localhost:8080"){$inst="bd_ecertifica_prueba";}
-        elseif(strstr($_SERVER["HTTP_HOST"], ".econta.mx") !== FALSE){
-            $bd_empresa_host = explode(".econta.mx",$_SERVER["HTTP_HOST"]);
-            $inst            = "bd_ecertifica_".$bd_empresa_host[0];
-        }
-        
-        //Verificar que exista la instancia y que tenga acceso:
-        $query  = "SELECT sNombreBD,sEstatusAcceso FROM instancias WHERE sNombreBD='$inst'";    
-        $result = mysqli_query($con,$query);  
+        $user      = $_POST['user'];
+        $password  = $_POST['pass']; 
+           
+        //Revisar Datos del Usuario:
+        $query  = "SELECT idUsuario, eTipoUsuario, hActivado FROM cu_control_acceso ".
+                  "WHERE sUsuario='$user' AND hClave='$password' AND hPassword != '' AND hActivado = '1'";
+        $result = $conexion->query($query);     
             
-        if(mysqli_num_rows($result) != 1 ){$respuesta_array = array("estado"=>"invalido", "nombre"=>"","mensaje"=>"Error: La instancia no existe.");}
-        else{
+        if($result->num_rows != 1){
+                
+            $sDescripcion    = "Inicio de sesi&oacute;n inv&aacute;lido - usuario/contrase&ntilde;a incorrectos.";
+          //$bitacora        = inserta_accion_bitacora('',$sDescripcion,$con,$Usuario,$inst,"LOGIN","", null);
+            $response        = "ERROR";
+                
+        }else{ 
+               
+            $datos    = mysqli_fetch_assoc($consulta); 
+            //Crear Variables de Sesion:
+            $_SESSION["idUsuario"]   = $datos['idUsuario'];
+            $_SESSION["eTipoUsuario"]= $datos['eTipoUsuario']; 
+            $_SESSION["sUsuario"]    = $user; 
             
-            $accesoInst = mysqli_fetch_assoc($result);
-            if($accesoInst['sEstatusAcceso'] != 'OK' && $accesoInst["sEstatusAcceso"] != "WARNING"){$respuesta_array = array("estado"=>"invalido", "nombre"=>"","mensaje"=>"Su acceso al sistema ha sido restringido debido a que tiene facturas pendientes de pago. Favor de contactarnos para mas informaci&oacute;n.");}
+            //Token:
+            $token = createToken();
+            $_SESSION["UST"] = $token; // USER TOKEN
+                   
+            //Actualiza usuario estatus:
+            $query   = "UPDATE cu_control_acceso SET sToken = '$token',sEstatusConexion='C',dFechaHoraConexion=NOW(), dFechaVencimientoToken = DATE_SUB(CONCAT(CURDATE(), ' ',CURTIME()), INTERVAL -1 DAY) ".
+                       "WHERE  sUsuario='$user' AND hClave='$password' ";
+            $success = $conexion->query($query);   
+                   
+            if(!($success)){$response = "Error: La sesi&oacutel;n no se registro correctamente, favor de intentarlo nuevamente.";}
             else{
-                
-                //Revisar Datos del Usuario:
-                if($Usuario == 'global@ecertifica.mx' OR $Usuario == 'ecertificaadmin'){
-                    $query = "SELECT sUser, sNombreBD, sNivelUsuario, sName ".
-                             "FROM user WHERE sUser='".$Usuario."' AND hPassword='".$Contra."' AND hPassword != '' AND iDeleted = '0'";
-                }else{
-                    $query = "SELECT sUser,sName, sNivelUsuario ".
-                             "FROM user A WHERE sUser='".$Usuario."' AND hPassword='".$Contra."' AND hPassword != '' ".
-                             "AND iDeleted = 0 AND sNombreBD = '$inst'";
-                }
-                
+               //Registrar en Bitacora:
+               $sDescripcion = "Inicio de sesi&oacute;n exitoso.";
+               //$bitacora     = inserta_accion_bitacora($token,$sDescripcion,$con,$Usuario,$inst,"LOGIN","",null);
+
+               if(!($bitacora)){$response = "Error: La sesi&oacutel;n no se registro correctamente, favor de intentarlo nuevamente.";}
+               else{$response = "OK"; }
             }
-
-            //verificar usuario 
-            $consulta = mysqli_query($con,$query);    
-            
-            if (mysqli_num_rows($consulta) != 1){
-                
-                $sDescripcion    = "Inicio de sesi&oacute;n inv&aacute;lido - usuario/contrase&ntilde;a incorrectos.";
-                $bitacora        = inserta_accion_bitacora('',$sDescripcion,$con,$Usuario,$inst,"LOGIN","", null);
-                $respuesta_array = array("estado"=>"invalido", "nombre"=>"","mensaje"=>"Error: El usuario y/o contraseña son incorrectos.");}
-                
-            else{ 
-               
-                $datos    = mysqli_fetch_assoc($consulta); 
-                   
-                //Crear Variables de Sesion:
-                $_SESSION["db_empresa"]   = $inst;
-                $_SESSION["user_nombre"]  = $datos['sName']; 
-                $_SESSION["user"]         = $datos['sUser']; 
-                $_SESSION["NivelUsuario"] = $datos['sNivelUsuario'];
-               
-               //Token:
-               $token = createToken();
-                   $_SESSION["token"]=$token;
-                   
-               //Actualiza usuario estatus:
-               $query   = "UPDATE user SET sToken = '$token',sEstatusConexion='C',dFechaHoraConexion=NOW(),dFechaVencimientoToken = DATE_SUB(CONCAT(CURDATE(), ' ',CURTIME()), INTERVAL -1 DAY) ".
-                          "WHERE sUser = '$Usuario' AND hPassword = '$Contra' AND iDeleted = '0'";
-               $success = mysqli_query($con, $query);  
-                   
-               if(!($success)){
-                   $respuesta_array = array("estado"=>"invalido", "nombre"=>"","mensaje"=>"Error: La sesi&oacutel;n no se inicio correctamente, favor de intentarlo nuevamente.");
-               }else{
-                   //Registrar en Bitacora:
-                   $sDescripcion = "Inicio de sesi&oacute;n exitoso.";
-                   $bitacora     = inserta_accion_bitacora($token,$sDescripcion,$con,$Usuario,$inst,"LOGIN","",null);
-
-                   if(!($bitacora)){$respuesta_array = array("estado"=>"invalido", "nombre"=>"","mensaje"=>"Error: La sesi&oacutel;n no se registro correctamente, favor de intentarlo nuevamente.");}
-                   else{$respuesta_array = array("estado"=>"valido","nombre"=>"$Usuario", "token"=>"$token", "empresa"=>$_SESSION['db_empresa']); }
-               }
-          
-            } 
         }
-        echo json_encode($respuesta_array);
+        echo $response;
     }
 ?>
