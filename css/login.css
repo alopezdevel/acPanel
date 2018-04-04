@@ -92,7 +92,7 @@
     -webkit-border-radius:6px;
     cursor:pointer;
 }
-#web_login .btn{
+#web_login .btn-login{
     
     background: rgba(241,125,37,1);
     background: -moz-linear-gradient(top, rgba(241,125,37,1) 0%, rgba(242,112,36,1) 100%);
@@ -104,7 +104,7 @@
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f17d25', endColorstr='#f27024', GradientType=0 );
     border:1px solid #f79627;
 }
-#web_login .btn:hover{
+#web_login .btn-login:hover{
     
     background: rgba(252,130,42,1);
     background: -moz-linear-gradient(top, rgba(252,130,42,1) 0%, rgba(227,93,16,1) 100%);

@@ -1,3 +1,35 @@
+/*-- GENERAL --*/
+h1{
+    color: #6e6e6e;
+    font-size: 1.5em;
+    padding: 30px 0px 10px;
+    margin-bottom: 25px;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+/* -- DATA GRID --*/
+.data-grid h3{
+    height:40px;
+    background: rgba(19,75,129,1);
+    background: -moz-linear-gradient(top, rgba(19,75,129,1) 0%, rgba(7,103,159,1) 100%);
+    background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(19,75,129,1)), color-stop(100%, rgba(7,103,159,1)));
+    background: -webkit-linear-gradient(top, rgba(19,75,129,1) 0%, rgba(7,103,159,1) 100%);
+    background: -o-linear-gradient(top, rgba(19,75,129,1) 0%, rgba(7,103,159,1) 100%);
+    background: -ms-linear-gradient(top, rgba(19,75,129,1) 0%, rgba(7,103,159,1) 100%);
+    background: linear-gradient(to bottom, rgba(19,75,129,1) 0%, rgba(7,103,159,1) 100%);
+    border-radius: 6px 6px 0 0!important;
+    -moz-border-radius: 6px 6px 0 0!important;
+    -webkit-border-radius: 6px 6px 0 0!important;
+    margin: 0 auto!important;
+    padding: 10px 10px 4px;
+    font-size: 1em;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #FFFFFF;
+    text-shadow: 0px 0px 5px rgba(0,0,0,0.5);
+    text-align: center;
+    border: 1px solid #2d7acb;
+}
+/*-- INFO SESION --*/
 .info_login{
     float: right;
     padding: 10px;
@@ -7,15 +39,27 @@
 }
 .info_login .row{
    
-   border:1px solid #f8fafb;
-   border-radius:6px;
-   -moz-border-radius:6px;
-   -webkit-border-radius:6px;
-   padding: 10px;
+    border: 1px solid rgba(197,202,208,0.5);
+    border-radius: 6px;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    padding: 5px 0px;
+    margin-right: 0px;
+    right: 30px;
+    width: 25%;
+    position: absolute;
+    top: 15px;
 }
-.info_login .row div:nth-child(1){border-right:1px solid #f8fafb;}
+.info_login .row div:nth-child(1){border-right:1px solid rgba(197,202,208,0.5);}
 .info_login span{
     font-size: 0.9rem;
     color:#8fb0bf;
+    cursor: pointer;
 }
+.info_login span:hover{color:#65afd1;}
 .info_login span i{color:#adb5bd;}
+.info_login span:first-child i {margin-right: 5px;}
+.info_login span:last-child:hover i{color:#c70d0d;}
+/*-- FOOTER --*/
+.footer{background:#dbdbdb;padding:0px!important;clear:both;position:fixed;width:100%;bottom:-50px;margin: 0px;height:90px;} 
+.footer .copyright{text-align: center;padding: 15px;font-size: 0.8em;color: #6e6e6e;}
